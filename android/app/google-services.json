@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "613588113694",
+    "project_id": "fexpense-72e92",
+    "storage_bucket": "fexpense-72e92.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613588113694:android:46657814f912c5b8bf110f",
+        "android_client_info": {
+          "package_name": "com.faseed.expensetracker.fexpense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeqlagcQHIttGId5BDjp_90gwYtNRh2RA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
