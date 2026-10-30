@@ -4,6 +4,7 @@
 
 **A Modern, Minimalist & Cross-Platform Expense & Liquidity Management Application**
 
+[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/mrfaseed/fexpense/releases/tag/v1.0.0)
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)](https://dart.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -20,6 +21,8 @@
   <a href="#contributing">Contributing</a> •
   <a href="#license">License</a>
 </p>
+
+> 🚀 **Current Version:** [`v1.0.0 (Initial Public Release)`](https://github.com/mrfaseed/fexpense/releases/tag/v1.0.0) — The first stable open-source release of FExpense.
 
 </div>
 

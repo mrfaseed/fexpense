@@ -68,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     final name = _authService.currentDisplayName;
-    _nameController.text = name.isNotEmpty ? name : 'Faseed';
+    _nameController.text = name.isNotEmpty ? name : 'User';
 
     // Default setup: 2 accounts (Primary Bank ₹7,000 + Cash in Hand ₹400 = ₹7,400)
     _setPresetAccounts(2);

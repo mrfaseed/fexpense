@@ -12,6 +12,22 @@ class AppTheme {
   static const Color textSecondary = Color(0xFFA1A1AA);
   static const Color textTertiary = Color(0xFF71717A);
 
+  // Dark Mint & Forest Palette (FExpense v2 Design System)
+  static const Color bgDark = Color(0xFF070C0E);
+  static const Color sidebarBg = Color(0xFF060A0C);
+  static const Color sidebarBorder = Color(0xFF10191D);
+  static const Color cardBg = Color(0xFF0C1417);
+  static const Color cardBorder = Color(0xFF152227);
+  static const Color heroBgStart = Color(0xFF091C19);
+  static const Color heroBgEnd = Color(0xFF081715);
+  static const Color heroBorder = Color(0xFF13453D);
+  static const Color mint = Color(0xFF00D09C);
+  static const Color mintSubtle = Color(0x2600D09C);
+  static const Color indigo = Color(0xFF6366F1);
+  static const Color amber = Color(0xFFF59E0B);
+  static const Color textMuted = Color(0xFF8B9CA3);
+  static const Color textFaint = Color(0xFF55656C);
+
   // Financial Accents
   static const Color emerald = Color(0xFF10B981);
   static const Color rose = Color(0xFFF43F5E);

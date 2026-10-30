@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import '../models/account_vault.dart';
-import '../screens/expense_tracker_screen.dart';
+import '../models/expense_item.dart';
 
 class FirestoreService {
   static final FirestoreService _instance = FirestoreService._internal();
@@ -144,6 +144,35 @@ class FirestoreService {
     }
   }
 
+  /// Atomic Transfer between vaults in a single batch
+  Future<void> transferVaultFunds({
+    required String uid,
+    required String sourceId,
+    required double newSourceBalance,
+    required String destId,
+    required double newDestBalance,
+  }) async {
+    try {
+      final batch = _db.batch();
+      final sourceRef = _accountsCollection(uid).doc(sourceId);
+      final destRef = _accountsCollection(uid).doc(destId);
+
+      batch.update(sourceRef, {
+        'balance': newSourceBalance,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+      batch.update(destRef, {
+        'balance': newDestBalance,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+      await batch.commit();
+    } catch (e) {
+      debugPrint('Firestore transferVaultFunds atomic error: $e');
+      rethrow;
+    }
+  }
+
   // ---------------------------------------------------------
   // EXPENSES OPERATIONS
   // ---------------------------------------------------------
@@ -195,7 +224,69 @@ class FirestoreService {
     }
   }
 
-  /// Delete spend (refund)
+  /// Atomic operation: add spend AND decrement account balance together
+  Future<void> addExpenseWithBalance({
+    required String uid,
+    required ExpenseItem item,
+    required String? accountId,
+    required double? newBalance,
+  }) async {
+    try {
+      final batch = _db.batch();
+      final expenseRef = _expensesCollection(uid).doc(item.id);
+      batch.set(expenseRef, {
+        'title': item.title,
+        'amount': item.amount,
+        'category': item.category,
+        'date': Timestamp.fromDate(item.date),
+        'accountId': item.accountId,
+        'accountName': item.accountName,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      if (accountId != null && newBalance != null) {
+        final accountRef = _accountsCollection(uid).doc(accountId);
+        batch.update(accountRef, {
+          'balance': newBalance,
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      await batch.commit();
+    } catch (e) {
+      debugPrint('Firestore addExpenseWithBalance atomic error: $e');
+      rethrow;
+    }
+  }
+
+  /// Atomic operation: delete spend (refund) AND restore account balance together
+  Future<void> deleteExpenseWithRefund({
+    required String uid,
+    required String expenseId,
+    String? accountId,
+    double? newBalance,
+  }) async {
+    try {
+      final batch = _db.batch();
+      final expenseRef = _expensesCollection(uid).doc(expenseId);
+      batch.delete(expenseRef);
+
+      if (accountId != null && newBalance != null) {
+        final accountRef = _accountsCollection(uid).doc(accountId);
+        batch.update(accountRef, {
+          'balance': newBalance,
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      await batch.commit();
+    } catch (e) {
+      debugPrint('Firestore deleteExpenseWithRefund atomic error: $e');
+      rethrow;
+    }
+  }
+
+  /// Delete spend (simple)
   Future<void> deleteExpense(String uid, String expenseId) async {
     try {
       await _expensesCollection(uid).doc(expenseId).delete();

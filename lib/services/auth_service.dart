@@ -49,13 +49,13 @@ class AuthService {
       (defaultTargetPlatform == TargetPlatform.windows ||
           defaultTargetPlatform == TargetPlatform.linux);
 
-  String get currentUid => currentUser?.uid ?? 'desktop_faseed';
+  String get currentUid => currentUser?.uid ?? 'local_user';
 
   String get currentDisplayName =>
-      currentUser?.displayName ?? 'Faseed';
+      currentUser?.displayName ?? 'User';
 
   String get currentEmail =>
-      currentUser?.email ?? 'faseed@google.com';
+      currentUser?.email ?? '';
 
   String? get currentPhotoUrl => currentUser?.photoURL;
 
